@@ -9,7 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from backend.pdf_reader import save_uploaded_file, extract_text
 from backend.document_manager import create_document
-from backend.ai import generate_summary
+from backend.ai import generate_summary, generate_flashcards
 
 
 st.set_page_config(
@@ -82,4 +82,26 @@ if st.button("Generate Summary"):
     st.subheader("📝 Summary")
 
     st.markdown(summary)
+
+st.divider()
+
+st.subheader("🎴 Flashcards")
+
+number_of_cards = st.slider(
+    "Number of flashcards",
+    min_value=5,
+    max_value=20,
+    value=10,
+)
+
+if st.button("Generate Flashcards"):
+
+    with st.spinner("Creating flashcards..."):
+
+        flashcards = generate_flashcards(
+            text,
+            number_of_cards,
+        )
+
+    st.markdown(flashcards)
     
