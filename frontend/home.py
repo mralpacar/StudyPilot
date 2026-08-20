@@ -9,6 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from backend.pdf_reader import save_uploaded_file, extract_text
 from backend.document_manager import create_document
+from backend.ai import generate_summary
 
 
 st.set_page_config(
@@ -68,3 +69,17 @@ if uploaded_file:
             text[:3000],
             height=350,
         )
+    st.divider()
+
+st.subheader("🧠 AI Study Tools")
+
+if st.button("Generate Summary"):
+
+    with st.spinner("StudyPilot is analyzing your document..."):
+
+        summary = generate_summary(text)
+
+    st.subheader("📝 Summary")
+
+    st.markdown(summary)
+    
