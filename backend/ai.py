@@ -76,3 +76,55 @@ Study material:
     )
 
     return response["message"]["content"]
+
+def generate_quiz(text: str, number_of_questions: int = 5):
+    """Generate structured multiple-choice questions."""
+
+    prompt = f"""
+Create exactly {number_of_questions} multiple-choice questions
+using ONLY the study material below.
+
+Return ONLY valid JSON.
+Do not include markdown.
+Do not include ```.
+
+The JSON must have exactly this structure:
+
+{{
+    "questions": [
+        {{
+            "question": "Question text",
+            "options": [
+                "Option A",
+                "Option B",
+                "Option C",
+                "Option D"
+            ],
+            "answer": 0
+        }}
+    ]
+}}
+
+Rules:
+- Create exactly {number_of_questions} questions.
+- Each question has exactly 4 options.
+- "answer" must be 0, 1, 2, or 3.
+- Only one answer is correct.
+- Use only information contained in the study material.
+
+Study material:
+
+{text}
+"""
+
+    response = ollama.chat(
+        model=MODEL_NAME,
+        messages=[
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+    )
+
+    return response["message"]["content"]

@@ -9,7 +9,11 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from backend.pdf_reader import save_uploaded_file, extract_text
 from backend.document_manager import create_document
-from backend.ai import generate_summary, generate_flashcards
+from backend.ai import (
+    generate_summary,
+    generate_flashcards,
+    generate_quiz,
+)
 
 
 st.set_page_config(
@@ -104,4 +108,27 @@ if st.button("Generate Flashcards"):
         )
 
     st.markdown(flashcards)
+
+st.divider()
+
+st.subheader("📝 Quiz")
+
+number_of_questions = st.slider(
+    "Number of questions",
+    min_value=3,
+    max_value=10,
+    value=5,
+)
+
+if st.button("Generate Quiz"):
+
+    with st.spinner("Creating your quiz..."):
+
+        quiz = generate_quiz(
+            text,
+            number_of_questions,
+        )
+    st.markdown(quiz)
+
+    st.code(quiz, language="json")
     
