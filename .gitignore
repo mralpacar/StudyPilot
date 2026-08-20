@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# StudyPilot local files
+uploads/
+data/
+
+# macOS
+.DS_Store
